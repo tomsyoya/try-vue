@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Deaggable Vue</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <!-- 異なるエリア間でdraggableの要素を行き来する記述 -->
+    <!-- <div id="app">
+        <div id="box1" class="box">
+            <draggable tag="ul" :options="{group:'ITEMS'}">
+              <li v-for="item, index in items" :key="item.no">{{item.name}}-(No.{{item.no}})</li>
+            </draggable>
+          </div>
+          <div id="box2" class="box">
+            <draggable tag="ul" :options="{group:'ITEMS'}">
+              <li v-for="item, index in items2" :key="item.no">{{item.name}}-(No.{{item.no}})</li>
+            </draggable>
+          </div>
+    </div> -->
+
+    <!-- 要素を新たに追加 -->
+    <ul id="app">
+      <button v-on:click="doAdd">追加</button>
+      <draggable>
+        <li v-for="item, index in myList" :key="item.no">
+          {{item.name}}-(No.{{item.no}})<span
+            class="del"
+            v-on:click="doDelete(index)"
+            >[削除]</span
+          >
+        </li>
+      </draggable>
+    </ul>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.23.2/vuedraggable.umd.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
