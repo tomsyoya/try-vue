@@ -7,6 +7,7 @@ function buildUrl(url) {
 
 Vue.component("news-list", {
   props: ["results"],
+  //コア部分をtemplate化 vueのルールでtemplateには１つのエレメントしか設定できない仕様なので、sectionで全体を囲む
   template: `
   <section>
     <div class="row" v-for="posts in processedPosts">
@@ -49,13 +50,18 @@ Vue.component("news-list", {
   },
 });
 
+const SECTIONS =
+  "home, arts, automobiles, books, business, fashion, food, health, insider, magazine, movies, national, nyregion, obituaries, opinion, politics, realestate, science, sports, sundayreview, technology, theater, tmagazine, travel, upshot, world"; // From NYTimes
+
 const vm = new Vue({
   el: "#app",
   data: {
     results: [],
+    sections: SECTIONS.split(", "), //NYtimesで用意されている各カテゴリ一覧
+    section: "home", //デフォルトのカテゴリ
   },
   mounted() {
-    this.getPosts("home");
+    this.getPosts(this.section);
   },
   methods: {
     // 指定された記事のカテゴリ名に応じてリクエストurlをgetする
