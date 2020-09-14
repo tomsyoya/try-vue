@@ -5,43 +5,23 @@ function buildUrl(url) {
   return NYTBaseUrl + url + ".json?api-key=" + ApiKey;
 }
 
-const vm = new Vue({
-  el: "#app",
-  data: {
-    // results: [
-    //   {
-    //     title: "the very first post",
-    //     abstract: "lorem ipsum some test dimpsum",
-    //   },
-    //   {
-    //     title: "and then there was the second",
-    //     abstract: "lorem ipsum some test dimsum",
-    //   },
-    //   {
-    //     title: "third time's a charm",
-    //     abstract: "lorem ipsum some test dimsum",
-    //   },
-    //   { title: "four the last time", abstract: "lorem ipsum some test dimsum" },
-    // ],
-    results: [],
-  },
-  mounted() {
-    this.getPosts("home");
-  },
-  methods: {
-    // 指定された記事のカテゴリ名に応じてリクエストurlをgetする
-    getPosts(section) {
-      let url = buildUrl(section);
-      axios
-        .get(url)
-        .then((response) => {
-          this.results = response.data.results;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  },
+Vue.component("news-list", {
+  props: ["results"],
+  template: `
+  <section>
+    <div class="row" v-for="posts in processedPosts">
+    <div class="columns large-3 medium-6" v-for="post in posts">
+      <div class="card">
+        <div class="card-divider">{{ post.title }}</div>
+        <a :href="post.url" target="_blank"
+          ><img :src="post.image_url"/></a>
+          <div class="card-section">
+            <p>{{ post.abstract }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>`,
   computed: {
     processedPosts() {
       let posts = this.results;
@@ -65,6 +45,30 @@ const vm = new Vue({
         chunkedArray[j] = posts.slice(i, i + chunk);
       }
       return chunkedArray;
+    },
+  },
+});
+
+const vm = new Vue({
+  el: "#app",
+  data: {
+    results: [],
+  },
+  mounted() {
+    this.getPosts("home");
+  },
+  methods: {
+    // 指定された記事のカテゴリ名に応じてリクエストurlをgetする
+    getPosts(section) {
+      let url = buildUrl(section);
+      axios
+        .get(url)
+        .then((response) => {
+          this.results = response.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 });
