@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>local storage sample</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        My name is <input v-model="name" /> and I am
+        <input v-model="age" /> years old.
+      </p>
+      <p>
+        <button @click="persist">Save</button>
+      </p>
+    </div>
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="main.js"></script>
+</html>
