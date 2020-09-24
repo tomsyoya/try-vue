@@ -13,6 +13,20 @@
       <p>
         <button @click="persist">Save</button>
       </p>
+      <div>
+        <h2>Cats</h2>
+        <div v-for="(cat, n) in cats">
+          <p>
+            <span class="cat">{{ cat }}</span>
+            <button @click="removeCat(n)">Remove</button>
+          </p>
+        </div>
+
+        <p>
+          <input v-model="newCat" />
+          <button @click="addCat">Add Cat</button>
+        </p>
+      </div>
     </div>
   </body>
 
